@@ -1,11 +1,12 @@
 class BuisnessDays {
+
+    static holidays = []
+
     constructor() {
-        const year = new Date().getFullYear();
-        this.holidays = []
-        this.holidays['y' + year] = this._setHolidays(year)
+        BuisnessDays._setHolidays(new Date().getFullYear())
     }
 
-    _findTheDay(year, hol) {
+    static _findTheDay(year, hol) {
 
         // simple case. just the day of the month
         if (hol.length === 2) {
@@ -30,7 +31,7 @@ class BuisnessDays {
         return result
     }
 
-    _setHolidays(year) {
+    static _setHolidays(year) {
         const holidays = []
         // List of FRB and ANB holidays
         // months are indexed by +1
@@ -51,17 +52,17 @@ class BuisnessDays {
         if (year >= 1870) holidays.push(['Christmas Day', [12, 25]])
 
         const result = holidays.map(hol => {
-            return this._findTheDay(year, hol[1]).toString().slice(0, 15)
+            return BuisnessDays._findTheDay(year, hol[1]).toString().slice(0, 15)
         })
 
-        return result
+        BuisnessDays.holidays['y' + year] = result
     }
 
     getHolidays(year = new Date().getFullYear()) {
-        if (!this.holidays['y' + year]) {
-            this.holidays['y' + year] = this._setHolidays(year)
+        if (!BuisnessDays.holidays['y' + year]) {
+            BuisnessDays._setHolidays(year)
         }
-        return this.holidays['y' + year]
+        return BuisnessDays.holidays['y' + year]
     }
 
     itIsHoliday(date) {
@@ -72,8 +73,17 @@ class BuisnessDays {
     itIsBuisnessDay(date) {
         return date.getDay() !== 6 && date.getDay() !== 0 && !this.itIsHoliday(date)
     }
-}
 
+    addBuisnessDays(date, count) {
+        const newDate = new Date(date)
+        const step = (count > 0) ? 1 : -1
+        while (count) {
+            newDate.setDate(newDate.getDate() + step)
+            if (this.itIsBuisnessDay(newDate)) count = count - step
+        }
+        return newDate
+    }
+}
 
 module.exports = {
     BuisnessDays
