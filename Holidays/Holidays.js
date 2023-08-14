@@ -15,7 +15,7 @@ class BuisnessDays {
         }
 
         // Finding the day of the given week
-        let [count, DOW, month] = hol
+        let [count, dow, month] = hol
         if (count < 0) {
             month = month + 1 // if we're going backward we starts at the next month
         }
@@ -25,7 +25,7 @@ class BuisnessDays {
 
         const result = new Date(year, month - 1, 1)
         // first part to position at DOW and second to add/subtract amount of weeks needed
-        const offSet = (7 + DOW - result.getDay()) % 7 + count * 7
+        const offSet = (7 + dow - result.getDay()) % 7 + count * 7
         result.setDate(result.getDate() + offSet)
 
         return result
@@ -34,7 +34,7 @@ class BuisnessDays {
     static _setHolidays(year) {
         const holidays = []
         // List of FRB and ANB holidays
-        // months are indexed by +1
+        // months are indexed by +1ƒ
         // two options to set up a holiday: Exact day of the month or a day of the given week
         // [7, 4] July 4th
         // [4, 4, 11] forth Thursday of November
