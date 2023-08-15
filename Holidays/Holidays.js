@@ -1,9 +1,9 @@
-class BuisnessDays {
+class BusinessDays {
 
     static holidays = []
 
     constructor() {
-        BuisnessDays._setHolidays(new Date().getFullYear())
+        BusinessDays._setHolidays(new Date().getFullYear())
     }
 
     static _findTheDay(year, hol) {
@@ -52,17 +52,17 @@ class BuisnessDays {
         if (year >= 1870) holidays.push(['Christmas Day', [12, 25]])
 
         const result = holidays.map(hol => {
-            return BuisnessDays._findTheDay(year, hol[1]).toString().slice(0, 15)
+            return BusinessDays._findTheDay(year, hol[1]).toString().slice(0, 15)
         })
 
-        BuisnessDays.holidays['y' + year] = result
+        BusinessDays.holidays['y' + year] = result
     }
 
     getHolidays(year = new Date().getFullYear()) {
-        if (!BuisnessDays.holidays['y' + year]) {
-            BuisnessDays._setHolidays(year)
+        if (!BusinessDays.holidays['y' + year]) {
+            BusinessDays._setHolidays(year)
         }
-        return BuisnessDays.holidays['y' + year]
+        return BusinessDays.holidays['y' + year]
     }
 
     itIsHoliday(date) {
@@ -70,21 +70,21 @@ class BuisnessDays {
         return holidays.includes(date.toString().slice(0, 15))
     }
 
-    itIsBuisnessDay(date) {
+    itIsBusinessDay(date) {
         return date.getDay() !== 6 && date.getDay() !== 0 && !this.itIsHoliday(date)
     }
 
-    addBuisnessDays(date, count) {
+    addBusinessDays(date, count) {
         const newDate = new Date(date)
         const step = (count > 0) ? 1 : -1
         while (count) {
             newDate.setDate(newDate.getDate() + step)
-            if (this.itIsBuisnessDay(newDate)) count = count - step
+            if (this.itIsBusinessDay(newDate)) count = count - step
         }
         return newDate
     }
 }
 
 module.exports = {
-    BuisnessDays
+    BusinessDays
 }
