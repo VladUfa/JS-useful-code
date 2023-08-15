@@ -1,12 +1,12 @@
 const holidaysModule = require('./Holidays')
 
-const buisnessDays = new holidaysModule.BuisnessDays
+const businessDays = new holidaysModule.BusinessDays
 
 
-//console.log(buisnessDays.itIsBuisnessDay(new Date()))
+//console.log(businessDays.itIsBusinessDay(new Date()))
 const today = new Date()
 console.log(today)
-console.log(buisnessDays.itIsBuisnessDay(today))
-console.log(buisnessDays.itIsHoliday(today))
-console.log(buisnessDays.addBuisnessDays(today, -5))
-console.log(buisnessDays.getHolidays())
+console.log(businessDays.itIsBusinessDay(today))
+console.log(businessDays.itIsHoliday(today))
+console.log(businessDays.addBusinessDays(today, -5))
+console.log(businessDays.getHolidays())
